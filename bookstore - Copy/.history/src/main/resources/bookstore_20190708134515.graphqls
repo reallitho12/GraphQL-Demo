@@ -27,7 +27,7 @@ type Query {
 
 type Mutation {
     newBook(title: String!, author: String!, genre: Genre!, isbn: Int!, quantity: Int!): Book!
-    restockBook(title: String!, quantity: Int!): Book
-    buyBook(title: String!, quantity: Int!): Book
+    restockBook(title: String!, quantity: Int!): Book!
+    buyBook(title: String!, quantity: Int!): Book!
     removeBook(title: String!): Boolean!
 }

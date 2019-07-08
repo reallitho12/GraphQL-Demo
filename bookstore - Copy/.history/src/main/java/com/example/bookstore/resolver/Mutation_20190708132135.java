@@ -34,22 +34,6 @@ public class Mutation implements GraphQLMutationResolver {
         book.ifPresent(b -> {
             b.setQuantity(b.getQuantity()+quantity);
             bookRepository.save(b);
-            System.out.println(title + " has been restocked!");
-        });
-
-        return book;
-    }
-
-    public Optional<Book> buyBook(String title, int quantity) {
-        Optional<Book> book = bookRepository.findByTitle(title);
-        book.ifPresent(b -> {
-            if (b.getQuantity() >= quantity){
-                b.setQuantity(b.getQuantity()-quantity);
-                bookRepository.save(b);
-            } else {
-                System.out.println("Not enough copies of " + title + "!");
-            }
-            
         });
 
         return book;

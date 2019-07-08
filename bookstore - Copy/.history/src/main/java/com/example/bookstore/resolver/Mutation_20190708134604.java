@@ -6,6 +6,8 @@ import com.example.bookstore.enums.*;
 import com.example.bookstore.repositories.BookRepository;
 import org.springframework.stereotype.Component;
 
+import kotlin.reflect.jvm.internal.impl.serialization.deserialization.FlexibleTypeDeserializer.ThrowException;
+
 import java.util.Optional;
 
 @Component
@@ -34,7 +36,6 @@ public class Mutation implements GraphQLMutationResolver {
         book.ifPresent(b -> {
             b.setQuantity(b.getQuantity()+quantity);
             bookRepository.save(b);
-            System.out.println(title + " has been restocked!");
         });
 
         return book;
@@ -43,13 +44,13 @@ public class Mutation implements GraphQLMutationResolver {
     public Optional<Book> buyBook(String title, int quantity) {
         Optional<Book> book = bookRepository.findByTitle(title);
         book.ifPresent(b -> {
-            if (b.getQuantity() >= quantity){
+            if (b.getQuantity() >= quantity ){
                 b.setQuantity(b.getQuantity()-quantity);
                 bookRepository.save(b);
-            } else {
-                System.out.println("Not enough copies of " + title + "!");
             }
-            
+            else{
+                System.out.println("Not enough books in stock!");
+            }
         });
 
         return book;
@@ -59,6 +60,7 @@ public class Mutation implements GraphQLMutationResolver {
         Optional<Book> book = bookRepository.findByTitle(title);
         book.ifPresent(b -> {
             bookRepository.deleteById(b.getId());
+            System.out.println("Book removed from stock!");
         });
         return true;
     }
