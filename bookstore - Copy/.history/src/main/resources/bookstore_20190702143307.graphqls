@@ -1,0 +1,32 @@
+type Book {
+    id: ID!
+    title: String!
+    author: String!
+    genre: Genre!
+    isbn: Int!
+    quantity: Int!
+}
+
+enum Genre {
+    FANTASY
+    SCIFI
+    NONFICTION
+    CHILDRENS
+    MYSTERY
+    ROMANCE
+}
+
+type Query {
+    book(id: ID!): Book
+    # book(title: String!): Book
+    # book(author: String!): [Book]
+    # book(genre: Genre!): [Book]
+    # book(isbn: Int!): Book
+    findAllBooks: [Book]!
+}
+
+type Mutation {
+    newBook(title: String!, author: String!, genre: Genre!, isbn: Int!, quantity: Int!): Book!
+    restockBook(id: ID!, quantity: Int!): Book
+    removeBook(id: ID!): Boolean!
+}
